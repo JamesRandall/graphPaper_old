@@ -1,0 +1,123 @@
+//
+//  GraphPaper.m
+//  graphPaper
+//
+//  Created by James Randall on 13/10/2010.
+//  Copyright 2010 Accidental Fish. All rights reserved.
+//
+
+#import "GraphPaper.h"
+#import "GraphPaperLocation.h"
+#import "Shape.h"
+
+@implementation GraphPaper
+
+@synthesize shapes = _shapes;
+@synthesize spacing = _spacing;
+
+- (id)init
+{
+	self = [super init];
+	if (self != nil)
+	{
+		self.shapes = [[[NSMutableArray alloc] init] autorelease];
+		self.spacing = 32;
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	self.shapes = nil;
+	[super dealloc];
+}
+
+- (GraphPaperLocation*)normalisedLocation:(CGPoint)location
+{
+	div_t result = div((int)location.x, (int)self.spacing);
+	int x = result.quot + (result.rem > self.spacing/2 ? 1 : 0);
+	
+	result = div((int)location.y, (int)self.spacing);
+	int y = result.quot + (result.rem > self.spacing/2 ? 1 : 0);
+	
+	return [[[GraphPaperLocation alloc] initWithX:x y:y] autorelease];
+}
+
+- (CGPoint)viewLocation:(GraphPaperLocation*)location
+{
+	return CGPointMake(location.x * self.spacing, location.y * self.spacing);
+}
+
+- (CGRect)bounds
+{
+	CGRect bounds;
+	BOOL first = YES;
+	for(Shape* shape in self.shapes)
+	{
+		CGRect shapeBounds = shape.bounds;
+		if (first)
+		{
+			bounds = shapeBounds;
+			first = NO;
+		}
+		else
+		{
+			bounds = CGRectUnion(bounds, shapeBounds);
+		}
+	}
+	return bounds;
+}
+
+- (NSString*)generateObjectiveCWithScale:(CGFloat)scale
+{
+	CGRect bounds = [self bounds];
+	NSMutableString *objectiveC = [[[NSMutableString alloc] init] autorelease];
+	[objectiveC appendString:@"CGContextRef context = UIGraphicsGetCurrentContext();\n"];
+	for(Shape* shape in self.shapes)
+	{
+		[objectiveC appendString:[shape objectiveCWithScale:scale transform:CGPointMake(-bounds.origin.x, -bounds.origin.y)]];
+	}
+	return objectiveC;
+}
+
+- (NSString*)generateHtmlWithScale:(CGFloat)scale
+{
+	CGRect bounds = [self bounds];
+	CGFloat width = bounds.size.width * scale;
+	CGFloat height = bounds.size.height * scale;
+	NSMutableString *script = [[[NSMutableString alloc] init] autorelease];
+	[script appendString:@"window.onload = function() {\n"];
+	[script appendString:@"var drawingCanvas = document.getElementById('drawing');\n"];
+	[script appendString:@"if(drawingCanvas && drawingCanvas.getContext) {\n"];
+	[script appendString:@"var context = drawingCanvas.getContext('2d');\n"];
+	for(Shape* shape in self.shapes)
+	{
+		[script appendString:[shape htmlWithScale:scale transform:CGPointMake(-bounds.origin.x, -bounds.origin.y)]];
+	}
+	[script appendString:@"}\n"];
+	[script appendString:@"}\n"];
+	
+	[script appendString:@"function drawEllipse(context, x, y, w, h) {\n"];
+	[script appendString:@"var kappa = .5522848,\n"];
+	[script appendString:@"ox = (w / 2) * kappa,\n"];
+	[script appendString:@"oy = (h / 2) * kappa,\n"];
+	[script appendString:@"xe = x + w,\n"];
+	[script appendString:@"ye = y + h,\n"];
+	[script appendString:@"xm = x + w / 2,\n"];
+	[script appendString:@"ym = y + h / 2;\n"];
+	[script appendString:@"context.beginPath();\n"];
+	[script appendString:@"context.moveTo(x, ym);\n"];
+	[script appendString:@"context.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);\n"];
+	[script appendString:@"context.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);\n"];
+	[script appendString:@"context.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);\n"];
+	[script appendString:@"context.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);\n"];
+	[script appendString:@"context.closePath();\n"];
+	[script appendString:@"context.stroke();\n"];
+	[script appendString:@"}\n"];
+	
+	return [NSString stringWithFormat:@"<!DOCTYPE html>\n<html>\n<head>\n<script type=\"text/javascript\">\n%@</script>\n</head>\n<body>\n<canvas id=\"drawing\" width=\"%.0f\" height=\"%.0f\" />\n</body></html>",
+			script, width, height];
+			
+}
+
+@end
