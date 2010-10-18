@@ -88,6 +88,7 @@ typedef enum
 - (IBAction)cancelClicked:(id)sender;
 - (IBAction)propertiesClicked:(id)sender;
 - (IBAction)exportClicked:(id)sender;
+- (IBAction)trashClicked:(id)sender;
 
 - (void)graphPaperClickedAt:(GraphPaperLocation*)location viewLocation:(CGPoint)viewLocation;
 - (void)graphPaperDragAt:(GraphPaperLocation*)location viewLocation:(CGPoint)viewLocation;

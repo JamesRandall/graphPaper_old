@@ -124,6 +124,8 @@
 
 @implementation EditorViewController
 
+#pragma mark --- property synthesis
+
 @synthesize graphPaperView = _graphPaperView;
 @synthesize editMode = _editMode;
 @synthesize pages = _pages;
@@ -151,6 +153,8 @@
 @synthesize exportViewController = _exportViewController;
 @synthesize exportPopoverController = _exportPopoverController;
 @synthesize export = _export;
+
+#pragma mark --- setup and teardown
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -205,19 +209,7 @@
     [super dealloc];
 }
 
-- (IBAction)editModeChanged:(id)sender
-{
-	self.editMode = (editModeEnum)self.editmodeControl.selectedSegmentIndex;
-	if (self.editMode != emLayout || self.isPlacingPoints)
-	{
-		[self clearGrabHandles];
-	}
-	self.isPlacingPoints = NO;
-	
-	[self.toolbar setItems:[self defaultToolbarItems] animated:YES];
-	[self.graphPaperView setNeedsDisplay];
-	[self setBarButtonStates];
-}
+#pragma mark --- controller methods
 
 - (void)graphPaperClickedAt:(GraphPaperLocation*)location viewLocation:(CGPoint)viewLocation
 {
@@ -303,6 +295,42 @@
 	self.isDraggingShape = NO;
 }
 
+#pragma mark --- property accessors
+
+- (void)setStrokeColor:(Color *)color
+{
+	@synchronized(self)
+	{
+		[_strokeColor release];
+		_strokeColor = [color retain];
+		
+		if (self.selectedShape != nil)
+		{
+			self.selectedShape.strokeColor = _strokeColor;
+			[self.graphPaperView setNeedsDisplay];
+		}
+		else if (self.isPlacingPoints)
+		{
+			[self.graphPaperView setNeedsDisplay];
+		}
+	}
+}
+
+- (void)setStrokeWidth:(CGFloat)width
+{
+	@synchronized(self)
+	{
+		_strokeWidth = width;
+		if (self.selectedShape != nil)
+		{
+			self.selectedShape.strokeWidth = _strokeWidth;
+			[self.graphPaperView setNeedsDisplay];
+		}
+	}
+}
+
+#pragma mark --- actions
+
 - (IBAction)doneClicked:(id)sender
 {
 	if (self.isPlacingPoints)
@@ -360,6 +388,30 @@
 	[self.exportPopoverController presentPopoverFromBarButtonItem:self.export permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
+- (IBAction)editModeChanged:(id)sender
+{
+	self.editMode = (editModeEnum)self.editmodeControl.selectedSegmentIndex;
+	if (self.editMode != emLayout || self.isPlacingPoints)
+	{
+		[self clearGrabHandles];
+	}
+	self.isPlacingPoints = NO;
+	
+	[self.toolbar setItems:[self defaultToolbarItems] animated:YES];
+	[self.graphPaperView setNeedsDisplay];
+	[self setBarButtonStates];
+}
+
+- (IBAction)trashClicked:(id)sender
+{
+	if (self.selectedShape != nil)
+	{
+		[self.graphPaper.shapes removeObject:self.selectedShape];
+		self.selectedShape = nil;
+		[self.graphPaperView setNeedsDisplay];
+	}
+}
+
 - (void)setSelectedShape:(Shape*)shape
 {
 	@synchronized(self)
@@ -370,38 +422,5 @@
 		[self setBarButtonStates];
 	}
 }
-
-- (void)setStrokeColor:(Color *)color
-{
-	@synchronized(self)
-	{
-		[_strokeColor release];
-		_strokeColor = [color retain];
-		
-		if (self.selectedShape != nil)
-		{
-			self.selectedShape.strokeColor = _strokeColor;
-			[self.graphPaperView setNeedsDisplay];
-		}
-		else if (self.isPlacingPoints)
-		{
-			[self.graphPaperView setNeedsDisplay];
-		}
-	}
-}
-
-- (void)setStrokeWidth:(CGFloat)width
-{
-	@synchronized(self)
-	{
-		_strokeWidth = width;
-		if (self.selectedShape != nil)
-		{
-			self.selectedShape.strokeWidth = _strokeWidth;
-			[self.graphPaperView setNeedsDisplay];
-		}
-	}
-}
-		
 
 @end
