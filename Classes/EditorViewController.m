@@ -208,11 +208,15 @@
 - (IBAction)editModeChanged:(id)sender
 {
 	self.editMode = (editModeEnum)self.editmodeControl.selectedSegmentIndex;
-	[self setBarButtonStates];
-	if (self.editMode != emLayout)
+	if (self.editMode != emLayout || self.isPlacingPoints)
 	{
 		[self clearGrabHandles];
 	}
+	self.isPlacingPoints = NO;
+	
+	[self.toolbar setItems:[self defaultToolbarItems] animated:YES];
+	[self.graphPaperView setNeedsDisplay];
+	[self setBarButtonStates];
 }
 
 - (void)graphPaperClickedAt:(GraphPaperLocation*)location viewLocation:(CGPoint)viewLocation
@@ -252,15 +256,25 @@
 
 		}
 		
-		GrabHandle *handle = [[[GrabHandle alloc] initWithController:self graphPaperLocation:location] autorelease];
-		[self.graphPaperView addSubview:handle];
-		[self.grabHandles addObject:handle];
-		[self.graphPaperView setNeedsDisplay];
-		
-		if (self.editMode == emEllipse && self.grabHandles.count == 2)
+		GrabHandle* firstHandle = self.grabHandles.count > 0 ? [self.grabHandles objectAtIndex:0] : nil;
+		if (self.editMode == emPolygon &&
+			firstHandle != nil &&
+			firstHandle.graphPaperLocation.x == location.x &&
+			firstHandle.graphPaperLocation.y == location.y)
 		{
 			[self doneClicked:nil];
 		}
+		else {
+			GrabHandle *handle = [[[GrabHandle alloc] initWithController:self graphPaperLocation:location] autorelease];
+			[self.graphPaperView addSubview:handle];
+			[self.grabHandles addObject:handle];
+			[self.graphPaperView setNeedsDisplay];
+			
+			if (self.editMode == emEllipse && self.grabHandles.count == 2)
+			{
+				[self doneClicked:nil];
+			}
+		}		
 	}
 }
 
@@ -367,6 +381,10 @@
 		if (self.selectedShape != nil)
 		{
 			self.selectedShape.strokeColor = _strokeColor;
+			[self.graphPaperView setNeedsDisplay];
+		}
+		else if (self.isPlacingPoints)
+		{
 			[self.graphPaperView setNeedsDisplay];
 		}
 	}

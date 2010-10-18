@@ -277,7 +277,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>1</integer>
+									<integer>9</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -327,7 +327,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1A9B0D14126B4E170002A1DB</string>
+										<string>1A54F5D3126C261700414483</string>
 										<key>history</key>
 										<array>
 											<string>1A5DC913126373FC001AA3AF</string>
@@ -357,7 +357,7 @@
 											<string>1A9B0CF0126B4BA50002A1DB</string>
 											<string>1A9B0CF1126B4BA50002A1DB</string>
 											<string>1A9B0D03126B4CDB0002A1DB</string>
-											<string>1A9B0D12126B4D960002A1DB</string>
+											<string>1A9B0D14126B4E170002A1DB</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -396,7 +396,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1010, 206}}</string>
+										<string>{{10, 27}, {1010, -27}}</string>
+										<key>RubberWindowFrame</key>
+										<string>34 90 1359 783 0 0 1440 878 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -450,9 +452,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1010, -27}}</string>
-										<key>RubberWindowFrame</key>
-										<string>34 90 1359 783 0 0 1440 878 </string>
+										<string>{{0, 0}, {568, 405}}</string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -480,11 +480,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1A9B082C1268FF820002A1DB</string>
+				<string>1A54F5D4126C261700414483</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>1A9B082D1268FF820002A1DB</string>
+				<string>1A54F5D5126C261700414483</string>
 				<string>1A5DC911126373FC001AA3AF</string>
-				<string>1A9B082E1268FF820002A1DB</string>
+				<string>1A54F5D6126C261700414483</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -674,11 +674,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C530D5B069F1CE1000CFCEE</string>
-		<string>1A5DC926126373FC001AA3AF</string>
-		<string>1A9B083F1268FFE90002A1DB</string>
-		<string>1A9B08401268FFE90002A1DB</string>
-		<string>/Users/james/Documents/codesion/trunk/graphPaper/graphPaper/graphPaper.xcodeproj</string>
+		<string>/Users/james/Documents/graphPaper/graphPaper.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>34 90 1359 783 0 0 1440 878 </string>
