@@ -12,9 +12,13 @@
 
 @implementation ExportViewController
 
+#pragma mark --- property synthesis
+
 @synthesize editorViewController = _editorViewController;
 @synthesize width = _width;
 @synthesize height = _height;
+
+#pragma mark --- setup and teardown
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil editorViewController:(EditorViewController*)editorViewController {
@@ -23,13 +27,6 @@
     }
     return self;
 }
-
-/*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-*/
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -56,14 +53,13 @@
 - (void)viewDidUnload {
     [super viewDidUnload];
 	self.editorViewController = nil;
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
-
 
 - (void)dealloc {
     [super dealloc];
 }
+
+#pragma mark --- actions
 
 - (IBAction)exportAsHtml:(id)sender
 {

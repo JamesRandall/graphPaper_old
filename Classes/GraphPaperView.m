@@ -16,7 +16,11 @@
 
 @implementation GraphPaperView
 
+#pragma mark --- property synthesis
+
 @synthesize controller = _controller;
+
+#pragma mark --- setup and teardown
 
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
@@ -24,6 +28,13 @@
     }
     return self;
 }
+
+- (void)dealloc {
+	self.controller = nil;
+    [super dealloc];
+}
+
+#pragma mark --- rendering
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -87,11 +98,7 @@
 	}
 }
 
-
-- (void)dealloc {
-	self.controller = nil;
-    [super dealloc];
-}
+#pragma mark --- interaction
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

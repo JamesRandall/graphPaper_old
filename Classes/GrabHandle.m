@@ -16,8 +16,12 @@ const CGFloat kGrabHandleSize = 16;
 
 @implementation GrabHandle
 
+#pragma mark --- property synthesis
+
 @synthesize controller = _controller;
 @synthesize graphPaperLocation = _graphPaperLocation;
+
+#pragma mark --- setup and teardown
 
 - (id)initWithController:(EditorViewController*)controller graphPaperLocation:(GraphPaperLocation*)graphPaperLocation
 {
@@ -32,13 +36,13 @@ const CGFloat kGrabHandleSize = 16;
 	return self;
 }
 
-- (id)initWithFrame:(CGRect)frame {
-    if ((self = [super initWithFrame:frame])) {
-        // Initialization code
-    }
-    return self;
+- (void)dealloc {
+	self.controller = nil;
+	self.graphPaperLocation = nil;
+    [super dealloc];
 }
 
+#pragma mark --- rendering
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -48,12 +52,7 @@ const CGFloat kGrabHandleSize = 16;
 	CGContextStrokeRect(context, self.bounds);
 }
 
-
-- (void)dealloc {
-	self.controller = nil;
-	self.graphPaperLocation = nil;
-    [super dealloc];
-}
+#pragma mark  --- interaction
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

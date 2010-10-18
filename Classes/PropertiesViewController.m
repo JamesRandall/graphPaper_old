@@ -9,13 +9,30 @@
 #import "PropertiesViewController.h"
 #import "EditorViewController.h"
 
+@interface PropertiesViewController (private)
+- (void)setStrokeWidthLabelText;
+@end
+
+@implementation PropertiesViewController (private)
+- (void)setStrokeWidthLabelText
+{
+	CGFloat value = self.slider.value;
+	self.strokeWidthLabel.text = [NSString stringWithFormat:@"%.0fpx", floorf(value)];
+}
+@end
+
+
+
 @implementation PropertiesViewController
+
+#pragma mark --- property synthesis
 
 @synthesize editorViewController = _editorViewController;
 @synthesize colorPicker = _colorPicker;
 @synthesize slider = _slider;
 @synthesize strokeWidthLabel = _strokeWidthLabel;
 
+#pragma mark --- setup and teardown
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil editorViewController:(EditorViewController*)editorViewController {
@@ -24,12 +41,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (void)setStrokeWidthLabelText
-{
-	CGFloat value = self.slider.value;
-	self.strokeWidthLabel.text = [NSString stringWithFormat:@"%.0fpx", floorf(value)];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -61,14 +72,18 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    self.editorViewController = nil;
+	self.colorPicker = nil;
+	self.slider = nil;
+	self.strokeWidthLabel = nil;
 }
 
 
 - (void)dealloc {
     [super dealloc];
 }
+
+#pragma mark --- actions
 
 - (IBAction)colorChanged:(id)sender
 {

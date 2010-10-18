@@ -11,9 +11,13 @@
 
 @implementation ColorPicker
 
+#pragma mark --- property synthesis
+
 @synthesize delegate = _delegate;
 @synthesize colors = _colors;
 @synthesize selectedColorIndex = _selectedColorIndex;
+
+#pragma mark --- setup and teardown
 
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
@@ -36,6 +40,14 @@
 	UITapGestureRecognizer* tapRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)] autorelease];
 	[self addGestureRecognizer:tapRecogniser];
 }
+
+- (void)dealloc {
+	self.delegate = nil;
+	self.colors = nil;
+    [super dealloc];
+}
+
+#pragma mark --- overrides
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -66,9 +78,7 @@
 	CGContextStrokeRect(context, highlightRect);
 }
 
-- (void)dealloc {
-    [super dealloc];
-}
+#pragma mark --- interaction
 
 - (void)tapped:(UITapGestureRecognizer*)recognizer
 {
@@ -84,6 +94,8 @@
 		[self.delegate colorChanged:self];
 	}
 }
+
+#pragma mark --- property accessors
 
 - (Color*)selectedColor
 {
