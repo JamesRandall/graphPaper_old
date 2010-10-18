@@ -21,6 +21,9 @@
 @property (readonly) NSString* hexCode;
 
 - (id)initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue;
+- (id)initWithCoder:(NSCoder*)coder;
+- (void)encodeWithCoder:(NSCoder*)coder;
+
 - (void)setStrokeInContext:(CGContextRef)context;
 - (void)setFillInContext:(CGContextRef)context;
 

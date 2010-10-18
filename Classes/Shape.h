@@ -29,6 +29,9 @@
 @property (readonly) CGRect bounds;
 
 - (id)initWithGraphPaper:(GraphPaper*)graphPaper points:(NSArray*)points strokeColor:(Color*)strokeColor strokeWidth:(CGFloat)strokeWidth;
+- (id)initWithCoder:(NSCoder*)coder;
+- (void)encodeWithCoder:(NSCoder*)coder;
+
 - (void)pathInContext:(CGContextRef)context;
 - (void)drawInContext:(CGContextRef)context;
 - (BOOL)containsViewPoint:(CGPoint)point;

@@ -11,10 +11,14 @@
 
 @implementation Shape
 
+#pragma mark --- property synthesis
+
 @synthesize points = _points;
 @synthesize graphPaper = _graphPaper;
 @synthesize strokeColor = _strokeColor;
 @synthesize strokeWidth = _strokeWidth;
+
+#pragma mark --- setup and teardown
 
 - (id)initWithGraphPaper:(GraphPaper*)graphPaper points:(NSArray*)points strokeColor:(Color*)strokeColor strokeWidth:(CGFloat)strokeWidth
 {
@@ -37,6 +41,28 @@
 	self.points = nil;
 	[super dealloc];
 }
+
+- (id)initWithCoder:(NSCoder*)coder
+{
+	self = [super init];
+	if (self != nil)
+	{
+		self.graphPaper = nil;
+		self.points = [coder decodeObjectForKey:@"points"];
+		self.strokeColor = [coder decodeObjectForKey:@"strokeColor"];
+		self.strokeWidth = [coder decodeFloatForKey:@"strokeWidth"];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder*)coder
+{
+	[coder encodeObject:self.points forKey:@"points"];
+	[coder encodeObject:self.strokeColor forKey:@"strokeColor"];
+	[coder encodeFloat:self.strokeWidth forKey:@"strokeWidth"];
+}
+
+#pragma mark --- document methods
 
 - (void)drawInContext:(CGContextRef)context
 {

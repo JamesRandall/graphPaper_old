@@ -12,8 +12,12 @@
 
 @implementation GraphPaper
 
+#pragma mark --- property synthesis
+
 @synthesize shapes = _shapes;
 @synthesize spacing = _spacing;
+
+#pragma mark --- setup and teardown
 
 - (id)init
 {
@@ -26,11 +30,34 @@
 	return self;
 }
 
+- (id)initWithCoder:(NSCoder*)coder
+{
+	self = [super init];
+	if (self != nil)
+	{
+		self.shapes = [coder decodeObjectForKey:@"shapes"];
+		self.spacing = [coder decodeFloatForKey:@"spacing"];
+		for(Shape* shape in self.shapes)
+		{
+			shape.graphPaper = self;
+		}
+	}
+	return self;
+}
+
+-(void)encodeWithCoder:(NSCoder*)coder
+{
+	[coder encodeObject:self.shapes forKey:@"shapes"];
+	[coder encodeFloat:self.spacing forKey:@"spacing"];
+}
+
 - (void)dealloc
 {
 	self.shapes = nil;
 	[super dealloc];
 }
+
+#pragma mark --- document methods
 
 - (GraphPaperLocation*)normalisedLocation:(CGPoint)location
 {

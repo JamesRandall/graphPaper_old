@@ -11,9 +11,13 @@
 
 @implementation Color
 
+#pragma mark --- property synthesis
+
 @synthesize red = _red;
 @synthesize green = _green;
 @synthesize blue = _blue;
+
+#pragma mark --- setup and teardown
 
 - (id)initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue
 {
@@ -26,6 +30,27 @@
 	}
 	return self;
 }
+
+- (id)initWithCoder:(NSCoder*)coder
+{
+	self = [super init];
+	if (self != nil)
+	{
+		self.red = [coder decodeFloatForKey:@"red"];
+		self.green = [coder decodeFloatForKey:@"green"];
+		self.blue = [coder decodeFloatForKey:@"blue"];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder*)coder
+{
+	[coder encodeFloat:self.red forKey:@"red"];
+	[coder encodeFloat:self.green forKey:@"green"];
+	[coder encodeFloat:self.blue forKey:@"blue"];
+}
+
+#pragma mark --- document methods
 
 - (void)setStrokeInContext:(CGContextRef)context
 {

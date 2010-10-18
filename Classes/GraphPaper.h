@@ -18,6 +18,9 @@
 @property (assign) CGFloat spacing;
 @property (readonly) CGRect bounds;
 
+- (id)initWithCoder:(NSCoder*)coder;
+- (void)encodeWithCoder:(NSCoder*)coder;
+
 - (GraphPaperLocation*)normalisedLocation:(CGPoint)location;
 - (CGPoint)viewLocation:(GraphPaperLocation*)location;
 - (NSString*)generateObjectiveCWithScale:(CGFloat)scale;

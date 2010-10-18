@@ -18,6 +18,9 @@
 @property (assign) int y;
 
 - (id)initWithX:(int)x y:(int)y;
+- (id)initWithCoder:(NSCoder*)coder;
+- (void)encodeWithCoder:(NSCoder*)coder;
+
 + (GraphPaperLocation*)locationWithX:(int)x y:(int)y;
 
 @end

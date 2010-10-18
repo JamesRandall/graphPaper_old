@@ -23,7 +23,24 @@
 		self.y = y;
 	}
 	return self;
-}	
+}
+
+- (id)initWithCoder:(NSCoder*)coder
+{
+	self = [super init];
+	if (self != nil)
+	{
+		self.x = [coder decodeIntForKey:@"x"];
+		self.y = [coder decodeIntForKey:@"y"];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder*)coder
+{
+	[coder encodeInt:self.x forKey:@"x"];
+	[coder encodeInt:self.y forKey:@"y"];
+}
 
 + (GraphPaperLocation*)locationWithX:(int)x y:(int)y
 {
