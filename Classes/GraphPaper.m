@@ -107,6 +107,7 @@
 	return objectiveC;
 }
 
+// current impl. is lame and needs moving out to a template file
 - (NSString*)generateHtmlWithScale:(CGFloat)scale
 {
 	CGRect bounds = [self bounds];
