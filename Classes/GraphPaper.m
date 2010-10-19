@@ -213,4 +213,38 @@
 	return @"gpp";
 }
 
++ (NSArray*)persistedPages
+{
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *homeDirectory = [paths objectAtIndex:0];
+	NSError *error = nil;
+	
+	NSArray* result = nil;
+	NSArray* foundPaths = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:homeDirectory error:&error];
+	if (error == nil)
+	{
+		NSMutableArray* matches = [[[NSMutableArray alloc] init] autorelease];
+		for(NSString* path in foundPaths)
+		{
+			if ([[path pathExtension] isEqualToString:[GraphPaper extension]])
+			{
+				[matches addObject:[path stringByDeletingPathExtension]];
+			}
+		}
+		if (matches.count > 0)
+		{
+			result = matches;
+		}
+	}
+	return result;
+}
+
++ (NSString*)filenameFromTitle:(NSString*)title
+{
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *homeDirectory = [paths objectAtIndex:0];
+	
+	return [[homeDirectory stringByAppendingPathComponent:title] stringByAppendingPathExtension:[GraphPaper extension]];
+}
+
 @end

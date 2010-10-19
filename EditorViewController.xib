@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="8"/>
+			<integer value="2"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -50,7 +50,7 @@
 							<object class="IBUISegmentedControl" id="562266787">
 								<reference key="NSNextResponder" ref="366432092"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{184, 7}, {150, 30}}</string>
+								<string key="NSFrame">{{199, 7}, {150, 30}}</string>
 								<reference key="NSSuperview" ref="366432092"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -99,17 +99,23 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<object class="NSMutableArray" key="IBUIItems">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBUIBarButtonItem" id="706329401">
-								<string key="IBUITitle">Pages</string>
+							<object class="IBUIBarButtonItem" id="570128217">
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="366432092"/>
+								<int key="IBUISystemItemIdentifier">4</int>
+							</object>
+							<object class="IBUIBarButtonItem" id="706329401">
+								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+								<int key="IBUIStyle">1</int>
+								<reference key="IBUIToolbar" ref="366432092"/>
+								<int key="IBUISystemItemIdentifier">11</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="537189118">
-								<string key="IBUITitle">Export</string>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="366432092"/>
+								<int key="IBUISystemItemIdentifier">9</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="538409863">
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -362,6 +368,30 @@
 					</object>
 					<int key="connectionID">42</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">newButton</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="570128217"/>
+					</object>
+					<int key="connectionID">44</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">pagesClicked:</string>
+						<reference key="source" ref="706329401"/>
+						<reference key="destination" ref="841351856"/>
+					</object>
+					<int key="connectionID">45</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">newClicked:</string>
+						<reference key="source" ref="570128217"/>
+						<reference key="destination" ref="841351856"/>
+					</object>
+					<int key="connectionID">46</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -409,6 +439,7 @@
 							<reference ref="447839355"/>
 							<reference ref="980834790"/>
 							<reference ref="537189118"/>
+							<reference ref="570128217"/>
 						</object>
 						<reference key="parent" ref="766721923"/>
 					</object>
@@ -482,6 +513,11 @@
 						<reference key="object" ref="537189118"/>
 						<reference key="parent" ref="366432092"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">43</int>
+						<reference key="object" ref="570128217"/>
+						<reference key="parent" ref="366432092"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -502,6 +538,7 @@
 					<string>39.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
 					<string>4.IBViewBoundsToFrameTransform</string>
+					<string>43.IBPluginDependency</string>
 					<string>5.IBPluginDependency</string>
 					<string>6.IBPluginDependency</string>
 					<string>8.CustomClassName</string>
@@ -529,10 +566,11 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>GraphPaperView</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAAAAAAAAxIBgAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAAAAAAAAxHqAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
@@ -553,7 +591,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">42</int>
+			<int key="maxID">46</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -569,11 +607,15 @@
 							<string>doneClicked:</string>
 							<string>editModeChanged:</string>
 							<string>exportClicked:</string>
+							<string>newClicked:</string>
+							<string>pagesClicked:</string>
 							<string>propertiesClicked:</string>
 							<string>trashClicked:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -590,6 +632,8 @@
 							<string>doneClicked:</string>
 							<string>editModeChanged:</string>
 							<string>exportClicked:</string>
+							<string>newClicked:</string>
+							<string>pagesClicked:</string>
 							<string>propertiesClicked:</string>
 							<string>trashClicked:</string>
 						</object>
@@ -609,6 +653,14 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">exportClicked:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">newClicked:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">pagesClicked:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -633,6 +685,7 @@
 							<string>finalSeperator</string>
 							<string>firstSeperator</string>
 							<string>graphPaperView</string>
+							<string>newButton</string>
 							<string>pages</string>
 							<string>properties</string>
 							<string>secondSeperator</string>
@@ -654,6 +707,7 @@
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
+							<string>UIBarButtonItem</string>
 							<string>UIToolbar</string>
 							<string>UIBarButtonItem</string>
 						</object>
@@ -670,6 +724,7 @@
 							<string>finalSeperator</string>
 							<string>firstSeperator</string>
 							<string>graphPaperView</string>
+							<string>newButton</string>
 							<string>pages</string>
 							<string>properties</string>
 							<string>secondSeperator</string>
@@ -710,6 +765,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">graphPaperView</string>
 								<string key="candidateClassName">GraphPaperView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">newButton</string>
+								<string key="candidateClassName">UIBarButtonItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">pages</string>

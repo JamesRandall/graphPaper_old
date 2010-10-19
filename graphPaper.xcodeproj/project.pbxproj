@@ -27,6 +27,8 @@
 		1ADD8DC41265D94500C6BD34 /* Shape.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD8DC31265D94500C6BD34 /* Shape.m */; };
 		1ADD8E1F1265E0FB00C6BD34 /* GraphPaperLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD8E1E1265E0FB00C6BD34 /* GraphPaperLocation.m */; };
 		1ADD8E251265E17F00C6BD34 /* GrabHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD8E241265E17F00C6BD34 /* GrabHandle.m */; };
+		1AF05D48126E153B00164A4E /* PagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AF05D46126E153B00164A4E /* PagePickerViewController.m */; };
+		1AF05D49126E153B00164A4E /* PagePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AF05D47126E153B00164A4E /* PagePickerViewController.xib */; };
 		1D3623260D0F684500981E51 /* GraphPaperAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* GraphPaperAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -70,6 +72,9 @@
 		1ADD8E1E1265E0FB00C6BD34 /* GraphPaperLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphPaperLocation.m; sourceTree = "<group>"; };
 		1ADD8E231265E17F00C6BD34 /* GrabHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrabHandle.h; sourceTree = "<group>"; };
 		1ADD8E241265E17F00C6BD34 /* GrabHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrabHandle.m; sourceTree = "<group>"; };
+		1AF05D45126E153B00164A4E /* PagePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagePickerViewController.h; sourceTree = "<group>"; };
+		1AF05D46126E153B00164A4E /* PagePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagePickerViewController.m; sourceTree = "<group>"; };
+		1AF05D47126E153B00164A4E /* PagePickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PagePickerViewController.xib; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* GraphPaperAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphPaperAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* GraphPaperAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphPaperAppDelegate.m; sourceTree = "<group>"; };
@@ -147,6 +152,9 @@
 				1A9B09C4126AE66D0002A1DB /* PropertiesViewController.m */,
 				1A9B0AF5126B1F950002A1DB /* ExportViewController.h */,
 				1A9B0AF6126B1F950002A1DB /* ExportViewController.m */,
+				1AF05D45126E153B00164A4E /* PagePickerViewController.h */,
+				1AF05D46126E153B00164A4E /* PagePickerViewController.m */,
+				1AF05D47126E153B00164A4E /* PagePickerViewController.xib */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -274,6 +282,7 @@
 				1A54F5CE126B525D00414483 /* EditorViewController.xib in Resources */,
 				1A54F5CF126B525D00414483 /* ExportViewController.xib in Resources */,
 				1A54F5D0126B525D00414483 /* PropertiesViewController.xib in Resources */,
+				1AF05D49126E153B00164A4E /* PagePickerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +308,7 @@
 				1A9B09C6126AE66D0002A1DB /* PropertiesViewController.m in Sources */,
 				1A9B09CE126AE7530002A1DB /* ColorPicker.m in Sources */,
 				1A9B0AF8126B1F950002A1DB /* ExportViewController.m in Sources */,
+				1AF05D48126E153B00164A4E /* PagePickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

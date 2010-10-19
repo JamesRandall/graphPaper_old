@@ -15,6 +15,7 @@
 @class Shape;
 @class PropertiesViewController;
 @class ExportViewController;
+@class PagePickerViewController;
 
 typedef enum
 {
@@ -38,9 +39,12 @@ typedef enum
 	UIPopoverController *_propertiesPopoverController;
 	ExportViewController *_exportViewController;
 	UIPopoverController *_exportPopoverController;
+	PagePickerViewController *_pagePickerViewController;
+	UIPopoverController *_pagePickerPopoverController;
 	
 	UIToolbar *_toolbar;
 	GraphPaperView* _graphPaperView;
+	UIBarButtonItem *_newButton;
 	UIBarButtonItem *_pages;
 	UIBarButtonItem *_editmodeControlContainer;
 	UISegmentedControl *_editmodeControl;
@@ -56,6 +60,7 @@ typedef enum
 }
 
 @property (retain) IBOutlet GraphPaperView* graphPaperView;
+@property (retain) IBOutlet UIBarButtonItem *newButton;
 @property (retain) IBOutlet UIBarButtonItem *pages;
 @property (retain) IBOutlet UIBarButtonItem *export;
 @property (retain) IBOutlet UIBarButtonItem *editmodeControlContainer;
@@ -82,6 +87,8 @@ typedef enum
 @property (retain) UIPopoverController* propertiesPopoverController;
 @property (retain) ExportViewController *exportViewController;
 @property (retain) UIPopoverController *exportPopoverController; 
+@property (retain) PagePickerViewController *pagePickerViewController;
+@property (retain) UIPopoverController *pagePickerPopoverController;
 
 - (IBAction)editModeChanged:(id)sender;
 - (IBAction)doneClicked:(id)sender;
@@ -89,9 +96,12 @@ typedef enum
 - (IBAction)propertiesClicked:(id)sender;
 - (IBAction)exportClicked:(id)sender;
 - (IBAction)trashClicked:(id)sender;
+- (IBAction)pagesClicked:(id)sender;
+- (IBAction)newClicked:(id)sender;
 
 - (void)graphPaperClickedAt:(GraphPaperLocation*)location viewLocation:(CGPoint)viewLocation;
 - (void)graphPaperDragAt:(GraphPaperLocation*)location viewLocation:(CGPoint)viewLocation;
 - (void)graphPaperReleasedAt:(GraphPaperLocation*)location viewLocation:(CGPoint)viewLocation;
+- (void)loadGraphFromTitle:(NSString*)title;
 
 @end

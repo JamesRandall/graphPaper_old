@@ -31,5 +31,7 @@
 - (void)save;
 
 + (NSString*)extension;
++ (NSArray*)persistedPages;
++ (NSString*)filenameFromTitle:(NSString*)title;
 
 @end

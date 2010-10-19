@@ -16,6 +16,7 @@
 #import "Ellipse.h"
 #import "ColorPicker.h"
 #import "ExportViewController.h"
+#import "PagePickerViewController.h"
 
 NSString* kDefaultFilename = @"filename";
 
@@ -53,7 +54,8 @@ NSString* kDefaultFilename = @"filename";
 
 - (NSArray*)defaultToolbarItems
 {
-	return [NSArray arrayWithObjects:self.pages,
+	return [NSArray arrayWithObjects:self.newButton,
+			self.pages,
 			self.export,
 			self.firstSeperator,
 			self.editmodeControlContainer,
@@ -65,7 +67,8 @@ NSString* kDefaultFilename = @"filename";
 
 - (NSArray*)polygonEditToolbarItems
 {
-	return [NSArray arrayWithObjects:self.pages,
+	return [NSArray arrayWithObjects:self.newButton,
+			self.pages,
 			self.export,
 			self.firstSeperator,
 			self.editmodeControlContainer,
@@ -81,7 +84,8 @@ NSString* kDefaultFilename = @"filename";
 
 - (NSArray*)ellipseEditToolbarItems
 {
-	return [NSArray arrayWithObjects:self.pages,
+	return [NSArray arrayWithObjects:self.newButton,
+			self.pages,
 			self.export,
 			self.firstSeperator,
 			self.editmodeControlContainer,
@@ -128,6 +132,18 @@ NSString* kDefaultFilename = @"filename";
 	[[NSUserDefaults standardUserDefaults] setObject:[self.graphPaper filename] forKey:kDefaultFilename];
 }
 
+- (void)loadGraphWithFilename:(NSString*)filename
+{
+	NSData *data = [[[NSData alloc] initWithContentsOfFile:filename] autorelease];
+	if (data != nil)
+	{
+		NSKeyedUnarchiver *archiver = [[[NSKeyedUnarchiver alloc] initForReadingWithData:data] autorelease];
+		self.graphPaper = [archiver decodeObject];
+		[[NSUserDefaults standardUserDefaults] setObject:filename forKey:kDefaultFilename];
+	}
+	self.selectedShape = nil;
+}
+
 @end
 
 
@@ -137,6 +153,7 @@ NSString* kDefaultFilename = @"filename";
 
 @synthesize graphPaperView = _graphPaperView;
 @synthesize editMode = _editMode;
+@synthesize newButton = _newButton;
 @synthesize pages = _pages;
 @synthesize editmodeControl = _editmodeControl;
 @synthesize properties = _properties;
@@ -162,6 +179,8 @@ NSString* kDefaultFilename = @"filename";
 @synthesize exportViewController = _exportViewController;
 @synthesize exportPopoverController = _exportPopoverController;
 @synthesize export = _export;
+@synthesize pagePickerViewController = _pagePickerViewController;
+@synthesize pagePickerPopoverController = _pagePickerPopoverController;
 
 #pragma mark --- setup and teardown
 
@@ -172,12 +191,7 @@ NSString* kDefaultFilename = @"filename";
 		NSString *filename = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultFilename];
 		if (filename != nil)
 		{
-			NSData *data = [[[NSData alloc] initWithContentsOfFile:filename] autorelease];
-			if (data != nil)
-			{
-				NSKeyedUnarchiver *archiver = [[[NSKeyedUnarchiver alloc] initForReadingWithData:data] autorelease];
-				self.graphPaper = [archiver decodeObject];
-			}
+			[self loadGraphWithFilename:filename];
 		}
 		if (self.graphPaper == nil)
 		{
@@ -202,6 +216,9 @@ NSString* kDefaultFilename = @"filename";
 	self.exportViewController = [[[ExportViewController alloc] initWithNibName:@"ExportViewController" bundle:nil editorViewController:self] autorelease];
 	self.exportPopoverController = [[[UIPopoverController alloc] initWithContentViewController:self.exportViewController] autorelease];
 	self.exportPopoverController.popoverContentSize = self.exportViewController.view.frame.size;
+	self.pagePickerViewController = [[[PagePickerViewController alloc] initWithNibName:@"PagePickerViewController" bundle:nil] autorelease];
+	self.pagePickerPopoverController = [[[UIPopoverController alloc] initWithContentViewController:self.pagePickerViewController] autorelease];
+	self.pagePickerViewController.editorViewController = self;
 }
 
 
@@ -321,6 +338,19 @@ NSString* kDefaultFilename = @"filename";
 	}
 }
 
+- (void)loadGraphFromTitle:(NSString*)title
+{
+	if (self.pagePickerPopoverController.isPopoverVisible)
+	{
+		[self.pagePickerPopoverController dismissPopoverAnimated:YES];
+	}
+	if (![self.graphPaper.title isEqualToString:title])
+	{
+		[self loadGraphWithFilename:[GraphPaper filenameFromTitle:title]];
+		[self.graphPaperView setNeedsDisplay];
+	}
+}
+
 #pragma mark --- property accessors
 
 - (void)setStrokeColor:(Color *)color
@@ -352,6 +382,17 @@ NSString* kDefaultFilename = @"filename";
 			self.selectedShape.strokeWidth = _strokeWidth;
 			[self.graphPaperView setNeedsDisplay];
 		}
+	}
+}
+
+- (void)setSelectedShape:(Shape*)shape
+{
+	@synchronized(self)
+	{
+		[_selectedShape release];
+		_selectedShape = [shape retain];
+		[self createGrabHandles];
+		[self setBarButtonStates];
 	}
 }
 
@@ -441,15 +482,19 @@ NSString* kDefaultFilename = @"filename";
 	}
 }
 
-- (void)setSelectedShape:(Shape*)shape
+- (IBAction)pagesClicked:(id)sender
 {
-	@synchronized(self)
-	{
-		[_selectedShape release];
-		_selectedShape = [shape retain];
-		[self createGrabHandles];
-		[self setBarButtonStates];
-	}
+	self.pagePickerViewController.editing = YES;
+	self.pagePickerViewController.titles = [GraphPaper persistedPages];
+	[self.pagePickerPopoverController presentPopoverFromBarButtonItem:self.pages permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
+- (IBAction)newClicked:(id)sender
+{
+	[self save];
+	self.graphPaper = [[[GraphPaper alloc] init] autorelease];
+	[self save];
+	[self.graphPaperView setNeedsDisplay];
 }
 
 @end
