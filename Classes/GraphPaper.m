@@ -10,12 +10,53 @@
 #import "GraphPaperLocation.h"
 #import "Shape.h"
 
+@interface GraphPaper (private)
+- (NSString*)nextAvailableTitle;
+@end
+
+@implementation GraphPaper (private)
+
+- (NSString*)nextAvailableTitle
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *homeDirectory = [paths objectAtIndex:0];
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSError* error;
+    NSArray* directoryContents = [fm contentsOfDirectoryAtPath:homeDirectory error:&error];
+    
+    int untitledNumber = 1;
+    BOOL alreadyExists = YES;
+    while(alreadyExists)
+    {
+        NSString* filename = [NSString stringWithFormat:@"%d.%@", untitledNumber, [GraphPaper extension]];
+        alreadyExists = NO;
+        for(NSString* existingFilename in directoryContents)
+        {
+            if ([filename isEqualToString:existingFilename])
+            {
+                alreadyExists = YES; 
+                break;
+            }
+        }
+        
+        if (alreadyExists)
+        {
+            untitledNumber++;
+		}
+    }
+    
+    return [NSString stringWithFormat:@"%d", untitledNumber];
+}
+
+@end
+
 @implementation GraphPaper
 
 #pragma mark --- property synthesis
 
 @synthesize shapes = _shapes;
 @synthesize spacing = _spacing;
+@synthesize title = _title;
 
 #pragma mark --- setup and teardown
 
@@ -26,6 +67,7 @@
 	{
 		self.shapes = [[[NSMutableArray alloc] init] autorelease];
 		self.spacing = 32;
+		self.title = [self nextAvailableTitle];
 	}
 	return self;
 }
@@ -37,6 +79,7 @@
 	{
 		self.shapes = [coder decodeObjectForKey:@"shapes"];
 		self.spacing = [coder decodeFloatForKey:@"spacing"];
+		self.title = [coder decodeObjectForKey:@"title"];
 		for(Shape* shape in self.shapes)
 		{
 			shape.graphPaper = self;
@@ -49,6 +92,7 @@
 {
 	[coder encodeObject:self.shapes forKey:@"shapes"];
 	[coder encodeFloat:self.spacing forKey:@"spacing"];
+	[coder encodeObject:self.title forKey:@"title"];
 }
 
 - (void)dealloc
@@ -144,8 +188,29 @@
 	[script appendString:@"}\n"];
 	
 	return [NSString stringWithFormat:@"<!DOCTYPE html>\n<html>\n<head>\n<script type=\"text/javascript\">\n%@</script>\n</head>\n<body>\n<canvas id=\"drawing\" width=\"%.0f\" height=\"%.0f\" />\n</body></html>",
-			script, width, height];
-			
+			script, width, height];	
+}
+
+- (void)save
+{
+	NSString *filename = [self filename];
+	NSMutableData* data = [[[NSMutableData alloc] init] autorelease];
+	NSKeyedArchiver* archiver = [[[NSKeyedArchiver alloc] initForWritingWithMutableData:data] autorelease];
+	[archiver encodeObject:self];
+	[archiver finishEncoding];
+	[data writeToFile:filename atomically:YES];
+}
+
+- (NSString*)filename
+{
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *homeDirectory = [paths objectAtIndex:0];
+	return [homeDirectory stringByAppendingPathComponent:[self.title stringByAppendingPathExtension:[GraphPaper extension]]];
+}
+
++ (NSString*)extension
+{
+	return @"gpp";
 }
 
 @end

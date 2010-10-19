@@ -12,9 +12,11 @@
 @interface GraphPaper : NSObject {
 	NSMutableArray *_shapes;
 	CGFloat _spacing;
+	NSString *_title;
 }
 
 @property (nonatomic, retain) NSMutableArray *shapes;
+@property (retain) NSString* title;
 @property (assign) CGFloat spacing;
 @property (readonly) CGRect bounds;
 
@@ -25,5 +27,9 @@
 - (CGPoint)viewLocation:(GraphPaperLocation*)location;
 - (NSString*)generateObjectiveCWithScale:(CGFloat)scale;
 - (NSString*)generateHtmlWithScale:(CGFloat)scale;
+- (NSString*)filename;
+- (void)save;
+
++ (NSString*)extension;
 
 @end

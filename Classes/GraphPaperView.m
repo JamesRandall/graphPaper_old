@@ -43,7 +43,8 @@
 	
     CGContextRef context = UIGraphicsGetCurrentContext();
 	
-	CGContextSetRGBStrokeColor(context, 0.6, 0.6, 0.6, 1.0);
+	//CGContextSetRGBStrokeColor(context, 232.0/255.0, 228.0/255.0, 217.0/255.0, 1.0);
+	CGContextSetRGBStrokeColor(context, 215.0/255.0, 210.0/255.0, 197.0/255.0, 1.0);
 	CGContextSetLineWidth(context, 0.5);
 	
 	CGRect bounds = self.bounds;

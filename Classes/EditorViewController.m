@@ -17,11 +17,14 @@
 #import "ColorPicker.h"
 #import "ExportViewController.h"
 
+NSString* kDefaultFilename = @"filename";
+
 @interface EditorViewController (private)
 - (void)setBarButtonStates;
 - (NSArray*)defaultToolbarItems;
 - (NSArray*)polygonEditToolbarItems;
 - (void)createGrabHandles;
+- (void)save;
 @end
 
 @implementation EditorViewController (private)
@@ -119,6 +122,12 @@
 	}
 }
 
+- (void)save
+{
+	[self.graphPaper save];
+	[[NSUserDefaults standardUserDefaults] setObject:[self.graphPaper filename] forKey:kDefaultFilename];
+}
+
 @end
 
 
@@ -160,7 +169,20 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         self.editMode = emPolygon;
-		self.graphPaper = [[[GraphPaper alloc] init] autorelease];
+		NSString *filename = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultFilename];
+		if (filename != nil)
+		{
+			NSData *data = [[[NSData alloc] initWithContentsOfFile:filename] autorelease];
+			if (data != nil)
+			{
+				NSKeyedUnarchiver *archiver = [[[NSKeyedUnarchiver alloc] initForReadingWithData:data] autorelease];
+				self.graphPaper = [archiver decodeObject];
+			}
+		}
+		if (self.graphPaper == nil)
+		{
+			self.graphPaper = [[[GraphPaper alloc] init] autorelease];
+		}
 		self.strokeColor = [Color colorWithRed:0.0 green:0.0 blue:0.0];
 		self.strokeWidth = 3.0;
     }
@@ -293,6 +315,10 @@
 - (void)graphPaperReleasedAt:(GraphPaperLocation*)location viewLocation:(CGPoint)viewLocation
 {
 	self.isDraggingShape = NO;
+	if (!self.isPlacingPoints)
+	{
+		[self save];
+	}
 }
 
 #pragma mark --- property accessors
@@ -367,6 +393,8 @@
 			self.isPlacingPoints = NO;
 			self.selectedShape = newShape;
 		}
+		
+		[self save];
 	}
 }
 
@@ -375,6 +403,7 @@
 	self.isPlacingPoints = NO;
 	[self clearGrabHandles];
 	[self.graphPaperView setNeedsDisplay];
+	[self.toolbar setItems:[self defaultToolbarItems] animated:YES];
 }
 
 - (IBAction)propertiesClicked:(id)sender
