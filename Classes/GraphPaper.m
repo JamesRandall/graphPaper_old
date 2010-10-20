@@ -247,4 +247,15 @@
 	return [[homeDirectory stringByAppendingPathComponent:title] stringByAppendingPathExtension:[GraphPaper extension]];
 }
 
++ (void)deleteWithTitle:(NSString*)title
+{
+	NSString *filename = [GraphPaper filenameFromTitle:title];
+	NSError *error = nil;
+	[[NSFileManager defaultManager] removeItemAtPath:filename error:&error];
+	if (error != nil)
+	{
+		NSLog(@"Unable to delete graph paper with at path %@:\n%@", title, [error localizedDescription]);
+	}
+}
+
 @end

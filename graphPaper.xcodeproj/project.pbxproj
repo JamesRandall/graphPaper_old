@@ -74,7 +74,7 @@
 		1ADD8E241265E17F00C6BD34 /* GrabHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrabHandle.m; sourceTree = "<group>"; };
 		1AF05D45126E153B00164A4E /* PagePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagePickerViewController.h; sourceTree = "<group>"; };
 		1AF05D46126E153B00164A4E /* PagePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagePickerViewController.m; sourceTree = "<group>"; };
-		1AF05D47126E153B00164A4E /* PagePickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PagePickerViewController.xib; sourceTree = "<group>"; };
+		1AF05D47126E153B00164A4E /* PagePickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PagePickerViewController.xib; path = Classes/PagePickerViewController.xib; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* GraphPaperAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphPaperAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* GraphPaperAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphPaperAppDelegate.m; sourceTree = "<group>"; };
@@ -154,7 +154,6 @@
 				1A9B0AF6126B1F950002A1DB /* ExportViewController.m */,
 				1AF05D45126E153B00164A4E /* PagePickerViewController.h */,
 				1AF05D46126E153B00164A4E /* PagePickerViewController.m */,
-				1AF05D47126E153B00164A4E /* PagePickerViewController.xib */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -205,6 +204,7 @@
 				1A54F5CB126B525D00414483 /* EditorViewController.xib */,
 				1A54F5CC126B525D00414483 /* ExportViewController.xib */,
 				1A54F5CD126B525D00414483 /* PropertiesViewController.xib */,
+				1AF05D47126E153B00164A4E /* PagePickerViewController.xib */,
 				1A1626E51264EDF400313D53 /* Assets */,
 				2899E5210DE3E06400AC0155 /* graphPaperViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,

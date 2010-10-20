@@ -8,12 +8,16 @@
 
 #import "PagePickerViewController.h"
 #import "EditorViewController.h"
+#import "GraphPaper.h"
 
 @implementation PagePickerViewController
 
 @synthesize tableView = _tableView;
 @synthesize titles = _titles;
 @synthesize editorViewController = _editorViewController;
+@synthesize done = _done;
+@synthesize edit = _edit;
+@synthesize toolbar = _toolbar;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -25,12 +29,14 @@
 }
 */
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+	[self.toolbar setItems:[NSArray arrayWithObject:self.edit] animated:NO];
 }
-*/
+
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -55,6 +61,7 @@
 
 
 - (void)dealloc {
+	self.titles = nil;
     [super dealloc];
 }
 
@@ -98,10 +105,34 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 { 
-	//if (editingStyle == UITableViewCellEditingStyleDelete) {
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
 		// Delete the row from the data source
-	//	[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-	//}   
+		NSString* currentTitle = [self.titles objectAtIndex:indexPath.row];
+		if ([self.editorViewController.graphPaper.title isEqualToString:currentTitle])
+		{
+			NSString* toLoadTitle = nil;
+			if (indexPath.row > 0)
+			{
+				toLoadTitle = [self.titles objectAtIndex:indexPath.row-1];
+			}
+			else if (indexPath.row < (self.titles.count - 1))
+			{
+				toLoadTitle = [self.titles objectAtIndex:indexPath.row+1];
+			}
+			
+			if (toLoadTitle != nil)
+			{
+				[self.editorViewController loadGraphFromTitle:toLoadTitle];
+			}
+			else
+			{
+				[self.editorViewController newGraphPaper];
+			}
+		}
+		[self.editorViewController deleteGraphPaper:[self.titles objectAtIndex:indexPath.row]];
+		[_titles removeObjectAtIndex:indexPath.row];
+		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+	}   
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -133,9 +164,29 @@
     [self.editorViewController loadGraphFromTitle:[self.titles objectAtIndex:indexPath.row]];
 }
 
+#pragma mark --- property accessors
+
+- (void)setTitles:(NSArray *)value
+{
+	@synchronized(self)
+	{
+		[_titles release];
+		_titles = value == nil ? nil : [[NSMutableArray alloc] initWithArray:value];
+	}
+}
+
+#pragma mark --- actions
+
 - (IBAction)editTapped:(id)sender
 {
+	[self.toolbar setItems:[NSArray arrayWithObject:self.done] animated:YES];
 	self.tableView.editing = YES;
+}
+
+- (IBAction)doneTapped:(id)sender
+{
+	[self.toolbar setItems:[NSArray arrayWithObject:self.edit] animated:YES];
+	self.tableView.editing = NO;
 }
 
 @end

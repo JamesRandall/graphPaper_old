@@ -12,14 +12,22 @@
 
 @interface PagePickerViewController : UIViewController {
 	UITableView *_tableView;
-	NSArray *_titles;
+	NSMutableArray *_titles;
 	EditorViewController *_editorViewController;
+	
+	UIToolbar *_toolbar;
+	UIBarButtonItem *_done;
+	UIBarButtonItem *_edit;
 }
 
 @property (retain) IBOutlet UITableView *tableView;
-@property (retain) NSArray *titles;
+@property (copy) NSArray *titles;
 @property (retain) EditorViewController *editorViewController;
+@property (retain) IBOutlet UIBarButtonItem *done;
+@property (retain) IBOutlet UIBarButtonItem *edit;
+@property (retain) IBOutlet UIToolbar *toolbar;
 
 - (IBAction)editTapped:(id)sender;
+- (IBAction)doneTapped:(id)sender;
 
 @end

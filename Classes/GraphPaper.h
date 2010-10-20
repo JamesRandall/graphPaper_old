@@ -33,5 +33,6 @@
 + (NSString*)extension;
 + (NSArray*)persistedPages;
 + (NSString*)filenameFromTitle:(NSString*)title;
++ (void)deleteWithTitle:(NSString*)title;
 
 @end

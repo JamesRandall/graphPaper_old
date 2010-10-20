@@ -351,6 +351,19 @@ NSString* kDefaultFilename = @"filename";
 	}
 }
 
+- (void)deleteGraphPaper:(NSString*)title
+{
+	[GraphPaper deleteWithTitle:title];
+}
+
+- (void)newGraphPaper
+{
+	[self save];
+	self.graphPaper = [[[GraphPaper alloc] init] autorelease];
+	[self save];
+	[self.graphPaperView setNeedsDisplay];
+}
+
 #pragma mark --- property accessors
 
 - (void)setStrokeColor:(Color *)color
@@ -485,16 +498,13 @@ NSString* kDefaultFilename = @"filename";
 - (IBAction)pagesClicked:(id)sender
 {
 	self.pagePickerViewController.editing = YES;
-	self.pagePickerViewController.titles = [GraphPaper persistedPages];
+	self.pagePickerViewController.titles = [NSMutableArray arrayWithArray:[GraphPaper persistedPages]];
 	[self.pagePickerPopoverController presentPopoverFromBarButtonItem:self.pages permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
 - (IBAction)newClicked:(id)sender
 {
-	[self save];
-	self.graphPaper = [[[GraphPaper alloc] init] autorelease];
-	[self save];
-	[self.graphPaperView setNeedsDisplay];
+	[self newGraphPaper];
 }
 
 @end

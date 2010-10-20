@@ -103,5 +103,7 @@ typedef enum
 - (void)graphPaperDragAt:(GraphPaperLocation*)location viewLocation:(CGPoint)viewLocation;
 - (void)graphPaperReleasedAt:(GraphPaperLocation*)location viewLocation:(CGPoint)viewLocation;
 - (void)loadGraphFromTitle:(NSString*)title;
+- (void)deleteGraphPaper:(NSString*)title;
+- (void)newGraphPaper;
 
 @end
