@@ -329,7 +329,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1AE95725126F1B51004DAB23</string>
+										<string>1AF1472B127060E400969384</string>
 										<key>history</key>
 										<array>
 											<string>1A5DC913126373FC001AA3AF</string>
@@ -361,7 +361,7 @@
 											<string>1AE95703126F1841004DAB23</string>
 											<string>1AE9570B126F1ABC004DAB23</string>
 											<string>1AE95718126F1B10004DAB23</string>
-											<string>1AE95719126F1B10004DAB23</string>
+											<string>1AE9572B126F1D60004DAB23</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -400,7 +400,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1010, 200}}</string>
+										<string>{{10, 27}, {1010, -27}}</string>
+										<key>RubberWindowFrame</key>
+										<string>17 90 1359 783 0 0 1440 878 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -454,9 +456,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1010, -27}}</string>
-										<key>RubberWindowFrame</key>
-										<string>17 90 1359 783 0 0 1440 878 </string>
+										<string>{{0, 0}, {568, 405}}</string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -484,11 +484,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1AE956C5126F126A004DAB23</string>
+				<string>1AF1472C127060E400969384</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>1AE956C6126F126A004DAB23</string>
+				<string>1AF1472D127060E400969384</string>
 				<string>1A5DC911126373FC001AA3AF</string>
-				<string>1AE956C7126F126A004DAB23</string>
+				<string>1AF1472E127060E400969384</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -678,9 +678,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1AE95726126F1B51004DAB23</string>
-		<string>1AE956D6126F12BF004DAB23</string>
-		<string>1AE956CF126F126A004DAB23</string>
 		<string>/Users/james/Documents/graphPaper/graphPaper.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
